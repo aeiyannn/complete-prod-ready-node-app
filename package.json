@@ -1,0 +1,20 @@
+{
+  "name": "node.js-5",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "aeiyan",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "joi": "^18.2.3",
+    "mongoose": "^9.7.4",
+    "nodemon": "^3.1.14"
+  }
+}
