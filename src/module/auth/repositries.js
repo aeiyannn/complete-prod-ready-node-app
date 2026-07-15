@@ -12,6 +12,14 @@ const signUp = async (payload) => {
 
 }
 
+const getUserbyEmail= async (email)=>{
+    const resp=await userModel.findOne({
+        email:email
+    })
+    return resp
+}
+
 module.exports = {
-    signUp
+    signUp,
+    getUserbyEmail
 }
