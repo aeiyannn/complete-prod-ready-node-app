@@ -1,17 +1,28 @@
 const joi = require('joi')
 const bcrypt = require('bcrypt');
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer')
 const authRepo = require('./repositries');
 const { isValidObjectId } = require('mongoose');
-
+const jwt = require('jsonwebtoken')
+const secretkey = "fu4gy4hur4r4hu4ru4h"
+// Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
-   host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
-  auth: {
+    host: "sandbox.smtp.mailtrap.io",
+    port: 587,
+    secure: false,
+    auth: {
         user: "673d7d48aea115",
         pass: "72e7c383ed17f6",
     },
 });
+const verify = transporter.verify().then((resp) => {
+    console.log(resp)
+})
+    .catch((e) => {
+        console.log(e)
+    })
+
+
 const signUp = async (payload) => {
     const signUpSchema = joi.object({
         name: joi.string().optional(),
@@ -38,14 +49,13 @@ const signUp = async (payload) => {
     console.log(hashpassword)
     payload.password = hashpassword
     const dbResponse = await authRepo.signUp(payload)
-    const info = await transporter.sendMail({
-        to: dbResponse.email, // list of recipients
-        subject: "Welcome", // subject line
-        text: "Welcome to our platform", // plain text body
-        html: "<b>Welcome to our platform</b>",
-    });
-    console.log(info)
-
+    const emailResp = await transporter.sendMail({
+        from: "Test User <from@example.com>",
+        to: payload.email,
+        html: "<h1 style='color:green;'> Welcome to our platform </h1>",
+        subject: "Welcome!"
+    })
+    console.log(emailResp)
     return dbResponse
 
 }
@@ -75,7 +85,16 @@ const login = async (payload) => {
             message: "Email or Password is incorrect"
         }
     }
-    return isEmailExist
+    console.log(isPasswordMatch,"test")
+    const token = jwt.sign({
+        id: isEmailExist._id,
+        email: isEmailExist.email,
+        name: isEmailExist.name
+    }, secretkey)
+    return {
+        token,
+        user:isEmailExist
+    }
 
 }
 

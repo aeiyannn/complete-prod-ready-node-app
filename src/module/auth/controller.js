@@ -1,4 +1,5 @@
 const authService =require("./service")
+const jwt =require('jsonwebtoken')
 const signUp = async (req,res)=>{
     const payload ={
         name:req.body.name,
@@ -26,4 +27,21 @@ const login = async (req,res)=>{
     res.json(result)
 }
 
-module.exports ={signUp,login}
+const getPing=(req,res)=>{
+    // if(!req.query.token){
+    //     res.status(400).json("token is required")
+    // }
+    // let payload;
+    // try {
+    //     const secretkey = "fu4gy4hur4r4hu4ru4h"
+    //    payload= jwt.verify(req.query.token,secretkey)
+    // }
+    // catch(e){
+    //     console.log(e,"test")
+    // res.status(400).json("Invalid Token")
+    // }
+
+    res.json("success")
+}
+
+module.exports ={signUp,login,getPing}

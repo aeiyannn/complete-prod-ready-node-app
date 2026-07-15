@@ -15,8 +15,7 @@ const userSchema = new mongoose.Schema(
         name: String,
         phoneNumber: String,
         age: Number
-    },
-    { strict: true }
+    }
 )
 const authModel = mongoose.model("users", userSchema)
 module.exports = authModel
