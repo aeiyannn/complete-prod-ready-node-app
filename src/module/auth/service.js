@@ -9,7 +9,6 @@ const secretkey = "fu4gy4hur4r4hu4ru4h"
 const transporter = nodemailer.createTransport({
     host: "sandbox.smtp.mailtrap.io",
     port: 587,
-    secure: false,
     auth: {
         user: "673d7d48aea115",
         pass: "72e7c383ed17f6",
@@ -90,7 +89,9 @@ const login = async (payload) => {
         id: isEmailExist._id,
         email: isEmailExist.email,
         name: isEmailExist.name
-    }, secretkey)
+    }, secretkey,{
+        expiresIn:"1d"
+    })
     return {
         token,
         user:isEmailExist
@@ -103,7 +104,14 @@ const getUserbyEmail = async (email) => {
     return data
 }
 
+
+const getUserProfile = async (id)=>{
+ const data = await authRepo.getUserById(id)
+ return data
+}
+
 module.exports = {
     signUp,
-    login
+    login,
+    getUserProfile
 }

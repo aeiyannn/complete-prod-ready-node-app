@@ -19,7 +19,15 @@ const getUserbyEmail= async (email)=>{
     return resp
 }
 
+const getUserById=async(id)=>{
+    console.log(id)
+    const resp = await userModel.findById(id)
+    console.log(resp)
+    return resp 
+}
+
 module.exports = {
     signUp,
-    getUserbyEmail
+    getUserbyEmail,
+    getUserById
 }
